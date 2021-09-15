@@ -1,0 +1,60 @@
+.user-container {
+  display: flex;
+  /* height: 100vh; */
+  max-width: 700px;
+  margin: auto;
+  /* border: 2px solid black; */
+}
+.left-container {
+  flex-basis: 50%;
+  background-size: cover;
+  padding: 1rem;
+  align-items: center;
+}
+.right-container {
+  flex-basis: 50%;
+  /* text-align: center; */
+  padding: 1rem;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.user-img {
+  height: 10vh;
+  width: 5rem;
+}
+.userdetail {
+  margin-top: 3rem;
+  text-align: start;
+}
+.userdetail > span {
+  display: block;
+}
+.user-img > img {
+  width: 100%;
+  /* border-radius: 50%; */
+}
+.post-input {
+  display: block;
+  padding: 0.3rem 1rem;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.post-textarea {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  margin-top: 0.8rem;
+}
+
+.like-btn {
+  border: none;
+  outline: none;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  margin-top: 0.6rem;
+
+}
