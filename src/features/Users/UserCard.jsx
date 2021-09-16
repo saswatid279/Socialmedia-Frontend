@@ -1,4 +1,4 @@
-import { likeButtonPressed, loadPosts } from "../Posts/postSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addPost } from "../Posts/postSlice";
@@ -30,7 +30,7 @@ export default function Usercard() {
           <div className="user-container">
             <div className="left-container">
               <div className="user-img">
-                <img src={user.profilePhotoUrl}></img>
+                <img src={user.profilePhotoUrl} alt="not available"></img>
               </div>
               <div className="userdetail"> 
                 <span>Name: {user.username}</span>
