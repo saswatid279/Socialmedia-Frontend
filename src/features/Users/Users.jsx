@@ -1,26 +1,57 @@
 import { useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
-import { loadUserInfo } from "../Users/userSlice";
-import { likeButtonPressed,loadPosts } from "../Posts/postSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { loadAllUsers } from "../Users/userSlice";
+import { followUser } from "../Users/userSlice";
+import "./users.css";
+export default function Users() {
+  const { status, error, users } = useSelector((state) => {
+    return state.allUsers;
+  });
+  const dispatch = useDispatch();
 
-export default function Users(){
+  const currentUser = useSelector((state) => {
+    console.log("currentuser" + state.auth.user);
+    return state.auth.user;
+  });
 
-    const {status,error,user}= useSelector((state)=>{
-        console.log("here",state.user)
-        return state.user})
+  useEffect(() => {
+    if (status === "idle") {
+      console.log("checking status", status);
+      dispatch(loadAllUsers());
+    }
+  }, [dispatch, status]);
 
+  function followHandler(userToBeFollowed, CurrentuserId) {
+    dispatch(followUser({ userToBeFollowed, CurrentuserId }));
+  }
 
-    return(<div>
-         {status==="loading" && <h2>loading</h2>}
-         {status==="error" && <h2>Error Occured{error}</h2>}
+  return (
+    <div>
+      {status === "loading" && <h2>loading</h2>}
+      {status === "error" && <h2>Error Occured{error}</h2>}
 
-        {status==="fulfilled" && users.map((user)=>(
-            <article key={user._id}>
-            <div>{user.username}</div>
-            <button onClick={}>Follow</button>
-            {/* <button onClick={}>Unfollow</button> */}
-            </article>
-            ))}
-
-    </div>);
+      {status === "fulfilled" &&  
+      <>
+      <h3>All users</h3>
+      {users.map((user) => (
+            <div className="users-container">
+            <li key={user._id}>
+            <div className="profileimg-container"><img className="profile-img" src={user.profilePhotoUrl} alt="not available"/></div>
+              <span className="username">{user.username}</span>
+              <button className="follow-btn"
+                disabled={user._id === currentUser._id}
+                onClick={() => {
+                  followHandler(user._id, currentUser._id);
+                }}
+              >
+                Follow
+              </button>
+              {/* <button onClick={}>Unfollow</button> */}
+            </li>
+            </div>
+          ))}
+        </>
+      }
+    </div>
+  );
 }

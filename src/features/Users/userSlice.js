@@ -1,27 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// export const loadUserInfo= createAsyncThunk("userinfo/loadUserInfo",async (userid)=>{
-//   const response = await axios.get("https://socialmediaapp.saswatidas.repl.co/user/`${userid}`");
-//   return response.data;
-// } );
-export const loadAllUsers= createAsyncThunk("userinfo/loadAllUsers",async ()=>{
+
+export const loadAllUsers= createAsyncThunk("allUsers/loadAllUsers",async ()=>{
   const response = await axios.get("https://socialmediaapp.saswatidas.repl.co/user/");
   return response.data;
 } );
 
+export const followUser= createAsyncThunk("allUsers/followUser",async ({userToBeFollowed,CurrentuserId})=>{
+  const response = await axios.post(`https://socialmediaapp.saswatidas.repl.co/user/${userToBeFollowed}/${CurrentuserId}`, {
+  });
+  console.log("in login",response.data)
+  return response.data;
+} ,);
 
 export const userSlice = createSlice({
-    name: 'userinfo',
-    status: "idle",
-    message: "",
-    error:null,
+    name: 'allUsers',  
     initialState: {
-      //user: [],
+    status: "idle",
+    updated: false,
+    error:null,
       users:[],
     },
     reducers: {
-        
+      updateUser: (state) => {
+            state.updated=false;
+          },
     }
     ,
    extraReducers:{
@@ -31,18 +35,28 @@ export const userSlice = createSlice({
       [loadAllUsers.fulfilled]:(state,action)=>{
         console.log("loader",action.payload.user);
         state.users=action.payload.user;
-        //console.log("fetch",state.users)
         state.status="fulfilled"
       },
       [loadAllUsers.rejected]:(state,action)=>{
         state.status="error";
         state.error=action.error.message
       },
-     
+      [followUser.pending]:(state)=>{
+        state.status="loading"
+      },
+      [followUser.fulfilled]:(state,action)=>{
+        console.log("loader",action.payload.user);
+        state.status="fulfilled"
+        state.updated="true"
+      },
+      [followUser.rejected]:(state,action)=>{
+        state.status="error";
+        state.error=action.error.message
+      },
 
     }
     
 
 })
-//export const {likeButtonPressed} =userSlice.actions;
-export default userSlice
+export const {updateUser} =userSlice.actions;
+export default userSlice;

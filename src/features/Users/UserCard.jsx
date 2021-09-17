@@ -1,8 +1,10 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addPost } from "../Posts/postSlice";
 import "./usercard.css";
+import { loadUserInfo } from "../Auth/authSlice";
+import { updateUser } from "./userSlice";
 export default function Usercard() {
   const [Title, setTitle] = useState();
   const [Content, setContent] = useState();
@@ -15,6 +17,16 @@ export default function Usercard() {
     console.log("checking user", state.auth.status);
     return state.auth.status;
   });
+  const updated=useSelector((state)=>{
+    return state.allUsers.updated;
+  })
+  useEffect(()=>{
+    if(updated)
+    {
+      dispatch(loadUserInfo(user._id));
+      updateUser();
+    }
+  },[updated,dispatch,user._id])
 
   function ClickHandler(Title, Content, authorId) {
     console.log("param", Title, Content, authorId);
@@ -35,11 +47,11 @@ export default function Usercard() {
               <div className="userdetail"> 
                 <span>Name: {user.username}</span>
                 <span>Bio: {user.userbio}</span>
-                <span>Followers: {user.followedby}</span>
-                <span>Following: {user.following}</span>
+                <span>Followers: {user.followedby.length}</span>
+                <span>Following: {user.following.length}</span>
               </div>
             </div>
-            {/* creating post */}
+            
             <div className="right-container">
               <input
                 className="post-input"
@@ -64,14 +76,7 @@ export default function Usercard() {
                 Add Post
               </button>
             </div>
-            {/* <div>{user.posts.map((post)=>{
-                <li key={post._id}>
-                    <div>{post.author} posted {post.Title}</div>
-                    <div>{post.imageurl}</div>
-                    <div>{post.info}</div>
-                    <div>{post.likes}<button onClick={()=>dispatch(likeButtonPressed(post._id))}>❤️likes</button></div>
-                </li>
-            })}</div> */}
+            
           </div>
         </article>
       )}

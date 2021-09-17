@@ -1,9 +1,7 @@
 .user-container {
   display: flex;
-  /* height: 100vh; */
   max-width: 700px;
   margin: auto;
-  /* border: 2px solid black; */
 }
 .left-container {
   flex-basis: 50%;
@@ -13,7 +11,6 @@
 }
 .right-container {
   flex-basis: 50%;
-  /* text-align: center; */
   padding: 1rem;
 
   align-items: center;
@@ -30,16 +27,20 @@
 }
 .userdetail > span {
   display: block;
+  font-weight: 800;
+  font-size: 1.1rem;
 }
 .user-img > img {
   width: 100%;
-  /* border-radius: 50%; */
 }
 .post-input {
   display: block;
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
   margin-top: 1rem;
+  border: 1px solid #E2E8F0;
+  border-radius: 5px;
+  box-shadow:2px 2px 6px gray;
 }
 
 .post-textarea {
@@ -47,6 +48,9 @@
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   margin-top: 0.8rem;
+  border: 1px solid #E2E8F0;
+  border-radius: 5px;
+  box-shadow:2px 2px 6px gray;
 }
 
 .like-btn {
@@ -57,4 +61,15 @@
   border-radius: 5px;
   margin-top: 0.6rem;
 
+}
+.post-btn {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin-top: 0.8rem;
+  background-color: #333;
+  color: #fff;
+  width:50%;
 }

@@ -4,9 +4,7 @@ export default function Navbar(){
         <div className="parent-container">
         <nav className="navbar">
           <div className="navbar-left">Connect</div>
-          <div>
-           
-            
+          <div>              
           </div>
         </nav>
       </div>

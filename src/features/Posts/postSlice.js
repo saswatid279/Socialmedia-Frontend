@@ -64,14 +64,13 @@ export const postSlice = createSlice({
         state.error=action.error.message
       },
       [likeButtonPressed.fulfilled]:(state,action)=>{
-        //console.log("loader",action.payload.posts);
-        //state.posts=action.payload.posts;
+       
         state.status="idle";
-        //console.log("fetch",state.posts)
+      
       },
 
     }
 
 })
-//export const {likeButtonPressed} =postSlice.actions;
+
 export default postSlice
