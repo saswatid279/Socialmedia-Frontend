@@ -36,3 +36,43 @@
     padding: 0.6rem 0.3rem;
 }
 
+.comment {
+	display: flex;
+	align-items: center;
+	background-color: #E2E8F0;
+	border-radius: 10px;
+	padding: 5px;
+	margin: 1.5em;
+}
+
+.comment input {
+	border: none;
+	background-color: #E2E8F0;
+	width: 100%;
+}
+
+.comment input:focus {
+	outline: none;
+}
+
+.postdetail-container{
+    max-width: 900px;
+    margin: auto;
+    height: auto;
+    width:30%;
+    padding: 0.6rem;
+    display: flex;
+    justify-content:flex-start ;
+    background-color: #fff;
+    
+    box-shadow:2px 2px 6px #333; 
+}
+
+.detail-container{
+   display:flex;
+   justify-content: center;
+   align-items: center;
+    margin: auto;
+    height:100vh;
+    border-radius: 1px solid black;
+}

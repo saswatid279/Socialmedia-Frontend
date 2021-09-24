@@ -4,15 +4,13 @@ import { useEffect, useState } from "react";
 import { addPost } from "../Posts/postSlice";
 import "./usercard.css";
 import { loadUserInfo } from "../Auth/authSlice";
-import { updateUser } from "./userSlice";
+
+import { Link } from "react-router-dom";
 export default function Usercard() {
   const [Title, setTitle] = useState();
   const [Content, setContent] = useState();
   const dispatch = useDispatch();
-  const user = useSelector((state) => {
-    console.log("checking user", state.auth.user);
-    return state.auth.user;
-  });
+  
   const status = useSelector((state) => {
     console.log("checking user", state.auth.status);
     return state.auth.status;
@@ -20,11 +18,16 @@ export default function Usercard() {
   const updated=useSelector((state)=>{
     return state.allUsers.updated;
   })
+  const user = useSelector((state) => {
+    console.log("currentuser",state.auth.user)
+    return state.auth.user;
+  });
   useEffect(()=>{
+    
     if(updated)
     {
       dispatch(loadUserInfo(user._id));
-      updateUser();
+     
     }
   },[updated,dispatch,user._id])
 
@@ -47,8 +50,8 @@ export default function Usercard() {
               <div className="userdetail"> 
                 <span>Name: {user.username}</span>
                 <span>Bio: {user.userbio}</span>
-                <span>Followers: {user.followedby.length}</span>
-                <span>Following: {user.following.length}</span>
+                <Link to="/followers"><span>Followers: {user.following.length}</span></Link><br></br>
+                <Link to="/following"><span>Following: {user.following.length}</span></Link>
               </div>
             </div>
             

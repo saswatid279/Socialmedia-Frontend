@@ -23,15 +23,36 @@ export const logInUser= createAsyncThunk("auth/logInUser",async (Email,Password)
     return response.data;
   } );
 
+  export const loadFollowers =createAsyncThunk("auth/loadFollowers",async (userId)=>{
+    const response = await axios.get(`https://socialmediaapp.saswatidas.repl.co/user/${userId}/followers`);
+    return response.data;
+  } );
+
+  // export const followUser= createAsyncThunk("allUsers/followUser",async ({userToBeFollowed,CurrentuserId})=>{
+  //   // const response = await axios.post(`https://socialmediaapp.saswatidas.repl.co/user/${userToBeFollowed}/${CurrentuserId}`, {
+  //   // });
+  //   const response = await axios.post("https://socialmediaapp.saswatidas.repl.co/user/follow", {
+  //     currentuser:CurrentuserId, user:userToBeFollowed
+  //     });
+  //   console.log("in follow",response.data)
+  //   return response.data;
+  // } ,);
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         status:"idle",
         token: "",
         isUserLoggedIn:false,
-        user:null
+        user:null,
+        following:[],
+        followers:[]
+        //updated: false,
     },
     reducers: {
+      // updateUser: (state) => {
+      //   state.updated=false;
+      // },
         
     },
     extraReducers: {
@@ -58,10 +79,10 @@ export const authSlice = createSlice({
           [createUser.fulfilled]:(state,action)=>{
             console.log("loader",action.payload.user);
             state.user=action.payload.user;
-            // state.message=action.payload.message;
+            
             state.isUserLoggedIn=true;
             console.log("fetch",state.user)
-            // console.log("message",state.message)
+           
             state.status="fulfilled"
           },
           [createUser.rejected]:(state,action)=>{
@@ -81,10 +102,38 @@ export const authSlice = createSlice({
             state.status="error";
             console.log("message",state.message)
           },
+          // [followUser.pending]:(state)=>{
+          //   state.status="loading"
+          // },
+          // [followUser.fulfilled]:(state,action)=>{
+          //   console.log("loader",action.payload.updatedusr);
+          //   //state.user=action.payload.updatedusr
+          //   state.status="fulfilled"
+          //   state.updated="true"
+          // },
+          // [followUser.rejected]:(state,action)=>{
+          //   state.status="error";
+          //   state.error=action.error.message
+          // },
+          [loadFollowers.pending]:(state)=>{
+            state.status="loading"
+          },
+          [loadFollowers.fulfilled]:(state,action)=>{
+            console.log("loadfollowers",action.payload.followers);
+            state.followers=action.payload.followers;
+            state.following=action.payload.following;
+            //console.log("fetch",state.user);
+            state.status="fulfilled";
+          },
+          [loadFollowers.rejected]:(state,action)=>{
+            state.status="error";
+            console.log("message",state.message)
+          },
 
     }
 
 })
 
+//export const {updateUser} =authSlice.actions;
 
 export default authSlice;

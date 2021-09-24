@@ -8,9 +8,22 @@ export const loadAllUsers= createAsyncThunk("allUsers/loadAllUsers",async ()=>{
 } );
 
 export const followUser= createAsyncThunk("allUsers/followUser",async ({userToBeFollowed,CurrentuserId})=>{
-  const response = await axios.post(`https://socialmediaapp.saswatidas.repl.co/user/${userToBeFollowed}/${CurrentuserId}`, {
-  });
-  console.log("in login",response.data)
+  // const response = await axios.post(`https://socialmediaapp.saswatidas.repl.co/user/${userToBeFollowed}/${CurrentuserId}`, {
+  // });
+  const response = await axios.post("https://socialmediaapp.saswatidas.repl.co/user/follow", {
+    currentuser:CurrentuserId, user:userToBeFollowed
+    });
+  console.log("in follow",response.data)
+  return response.data;
+} ,);
+
+export const unfollowUser= createAsyncThunk("allUsers/followUser",async ({userToBeUnfollowed,CurrentuserId})=>{
+  // const response = await axios.post(`https://socialmediaapp.saswatidas.repl.co/user/${userToBeFollowed}/${CurrentuserId}`, {
+  // });
+  const response = await axios.post("https://socialmediaapp.saswatidas.repl.co/user/unfollow", {
+    currentuser:CurrentuserId, user:userToBeUnfollowed
+    });
+  console.log("in follow",response.data)
   return response.data;
 } ,);
 
@@ -50,6 +63,18 @@ export const userSlice = createSlice({
         state.updated="true"
       },
       [followUser.rejected]:(state,action)=>{
+        state.status="error";
+        state.error=action.error.message
+      },
+      [unfollowUser.pending]:(state)=>{
+        state.status="loading"
+      },
+      [unfollowUser.fulfilled]:(state,action)=>{
+        console.log("loader",action.payload.user);
+        state.status="fulfilled"
+        state.updated="true"
+      },
+      [unfollowUser.rejected]:(state,action)=>{
         state.status="error";
         state.error=action.error.message
       },

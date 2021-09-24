@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadAllUsers } from "../Users/userSlice";
 import { followUser } from "../Users/userSlice";
+import { updateUser } from "../Users/userSlice";
 import "./users.css";
 export default function Users() {
   const { status, error, users } = useSelector((state) => {
@@ -22,7 +23,9 @@ export default function Users() {
   }, [dispatch, status]);
 
   function followHandler(userToBeFollowed, CurrentuserId) {
+   
     dispatch(followUser({ userToBeFollowed, CurrentuserId }));
+    updateUser();
   }
 
   return (
